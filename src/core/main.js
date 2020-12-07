@@ -8,7 +8,11 @@ const dispatch = (data) => {
 }
 
 const createDefaultWindow = () => {
-  win = new BrowserWindow()
+  win = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
 
   win.on('closed', () => {
     win = null
@@ -63,5 +67,6 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 
 autoUpdater.on('update-downloaded', (info) => {
-  dispatch('Update downloaded')
+  dispatch('Update downloaded');
+  autoUpdater.quitAndInstall();
 })
